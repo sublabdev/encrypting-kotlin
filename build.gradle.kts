@@ -16,6 +16,10 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    implementation("dev.sublab:common-kotlin:1.0.0")
+    implementation("dev.sublab:hashing-kotlin:1.0.0")
+    implementation("net.i2p.crypto:eddsa:0.3.0")
+    implementation("org.web3j:crypto:4.9.5")
 }
 
 tasks.test {
