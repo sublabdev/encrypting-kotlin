@@ -1,7 +1,7 @@
 package dev.sublab.ed25519
 
 import dev.sublab.hex.hex
-import dev.sublab.encrypting.SignatureEngine
+import dev.sublab.encrypting.signing.SignatureEngine
 import net.i2p.crypto.eddsa.*
 import net.i2p.crypto.eddsa.spec.EdDSANamedCurveTable
 import net.i2p.crypto.eddsa.spec.EdDSAPrivateKeySpec
@@ -37,22 +37,22 @@ class Ed25519(private val byteArray: ByteArray): SignatureEngine {
 
     private fun publicKeySpec() = EdDSAPublicKeySpec(privateKeyFromEncoded(byteArray).a, curveTable())
 
-    override fun createPrivateKey(): ByteArray
+    override fun loadPrivateKey(): ByteArray
         = keyFactory().generatePrivate(privateKeySpecFromSeed()).encoded.withoutPrivateKeyPrefix()
     override fun publicKey(): ByteArray
         = keyFactory().generatePublic(publicKeySpec()).encoded.withoutPublicKeyPrefix()
 
     private fun signature() = Signature.getInstance(EdDSAEngine.SIGNATURE_ALGORITHM, EdDSASecurityProvider.PROVIDER_NAME)
 
-    override fun sign(privateKey: ByteArray): ByteArray = signature().run {
-        initSign(privateKeyFromEncoded(privateKey))
-        update(byteArray)
+    override fun sign(message: ByteArray): ByteArray = signature().run {
+        initSign(privateKeyFromEncoded(byteArray))
+        update(message)
         sign()
     }
 
-    override fun verify(signature: ByteArray, publicKey: ByteArray) = signature().run {
-        initVerify(EdDSAPublicKey(X509EncodedKeySpec(publicKey.withPublicKeyPrefix())))
-        update(byteArray)
+    override fun verify(message: ByteArray, signature: ByteArray) = signature().run {
+        initVerify(EdDSAPublicKey(X509EncodedKeySpec(byteArray.withPublicKeyPrefix())))
+        update(message)
         verify(signature)
     }
 }

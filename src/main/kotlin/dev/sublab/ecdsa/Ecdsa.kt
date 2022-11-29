@@ -1,10 +1,11 @@
 package dev.sublab.ecdsa
 
 import dev.sublab.hex.hex
-import dev.sublab.encrypting.SignatureEngine
+import dev.sublab.encrypting.signing.SignatureEngine
 import dev.sublab.hashing.hashers.blake2b_256
 import dev.sublab.hashing.hashers.keccak256
 import dev.sublab.hashing.hashing
+import org.bouncycastle.jce.ECNamedCurveTable
 import org.web3j.crypto.ECDSASignature
 import org.web3j.crypto.ECKeyPair
 import org.web3j.crypto.Sign
@@ -18,19 +19,24 @@ private fun ByteArray.toEcdsa() = BigInteger(hex.encode(), 16)
 typealias Hasher = (ByteArray) -> ByteArray
 
 class Ecdsa(private val byteArray: ByteArray, private val hasher: Hasher): SignatureEngine {
-    override fun createPrivateKey() = byteArray
-    override fun publicKey(): ByteArray = Sign.publicKeyFromPrivate(byteArray.toEcdsa()).toByteArray()
+    private fun privateKey() = byteArray.toEcdsa()
+    private fun publicKey(privateKey: BigInteger) = Sign.publicKeyFromPrivate(privateKey)
 
-    override fun sign(privateKey: ByteArray) = hasher(byteArray).let { message ->
-        val privateKey = privateKey.toEcdsa()
-        val publicKey = Sign.publicKeyFromPrivate(privateKey)
+    override fun loadPrivateKey() = byteArray
+    override fun publicKey(): ByteArray = Sign.publicPointFromPrivate(privateKey())
+        .getEncoded(true)
+
+    @Suppress("NAME_SHADOWING")
+    override fun sign(message: ByteArray) = hasher(message).let { message ->
+        val privateKey = privateKey()
+        val publicKey = publicKey(privateKey)
 
         Sign.signMessage(message, ECKeyPair(privateKey, publicKey), false).let {
             it.r + it.s + it.v
         }
     }
 
-    override fun verify(signature: ByteArray, publicKey: ByteArray): Boolean {
+    override fun verify(message: ByteArray, signature: ByteArray): Boolean {
         if (signature.size != signatureSizeWithHeader) return false
 
         val signatureV = signature.reversedArray().copyOf(1)
@@ -38,10 +44,14 @@ class Ecdsa(private val byteArray: ByteArray, private val hasher: Hasher): Signa
         val signatureS = signature.copyOfRange(signaturePartSize, signaturePartSize*2).toEcdsa()
         val ecdsaSignature = ECDSASignature(signatureR, signatureS)
 
-        val publicKey = publicKey.toEcdsa()
+        val publicKey = ECNamedCurveTable.getParameterSpec("secp256k1")
+            .curve.decodePoint(byteArray)
+            .let { it.xCoord.encoded + it.yCoord.encoded }
+            .toEcdsa()
+
         for (recId in 0..3) {
             if (!Sign.getVFromRecId(recId).contentEquals(signatureV)) continue
-            val publicKeyFound = Sign.recoverFromSignature(recId, ecdsaSignature, hasher(byteArray)) ?: continue
+            val publicKeyFound = Sign.recoverFromSignature(recId, ecdsaSignature, hasher(message)) ?: continue
             if (publicKeyFound == publicKey) return true
         }
 
