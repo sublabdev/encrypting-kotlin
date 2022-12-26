@@ -1,5 +1,6 @@
 package dev.sublab.encrypting.keys
 
+import dev.sublab.encrypting.mnemonic.DefaultMnemonic
 import dev.sublab.encrypting.mnemonic.DefaultMnemonicProvider
 import dev.sublab.encrypting.mnemonic.Mnemonic
 import dev.sublab.encrypting.mnemonic.SeedFactory
@@ -16,6 +17,8 @@ interface KeyPairFactory {
     fun generate(wordCount: Int = DEFAULT_WORD_COUNT) = generate(DefaultMnemonicProvider(seedFactory).make(wordCount))
 
     fun generate(mnemonic: Mnemonic) = load(mnemonic.toSeed())
+    fun generate(phrase: String) = generate(DefaultMnemonic.fromPhrase(phrase))
+    fun generate(words: Sequence<String>) = generate(DefaultMnemonic.fromWords(words))
 }
 
 abstract class KeyPair: Signer, Verifier {
