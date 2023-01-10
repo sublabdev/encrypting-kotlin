@@ -19,6 +19,8 @@ private fun ByteArray.toEcdsa() = BigInteger(hex.encode(), 16)
 typealias Hasher = (ByteArray) -> ByteArray
 
 class Ecdsa(private val byteArray: ByteArray, private val hasher: Hasher): SignatureEngine {
+    override val name = "ecdsa"
+
     private fun privateKey() = byteArray.toEcdsa()
     private fun publicKey(privateKey: BigInteger) = Sign.publicKeyFromPrivate(privateKey)
 

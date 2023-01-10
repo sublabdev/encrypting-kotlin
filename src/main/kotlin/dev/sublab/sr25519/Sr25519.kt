@@ -3,6 +3,8 @@ package dev.sublab.sr25519
 import dev.sublab.encrypting.signing.SignatureEngine
 
 class Sr25519(private val byteArray: ByteArray, private val label: String): SignatureEngine {
+    override val name = "sr25519"
+
     private fun privateKey() = try {
         MiniSecretKey.fromByteArray(byteArray).expand(ExpansionMode.ED25519)
     } catch (_: Exception) {
@@ -15,7 +17,7 @@ class Sr25519(private val byteArray: ByteArray, private val label: String): Sign
     override fun loadPrivateKey() = privateKey().toByteArray()
     override fun publicKey() = privateKey().toPublicKey().toByteArray()
 
-    private fun transcript(message: ByteArray) = SigningContext(label.toByteArray()).bytes(message)
+    private fun transcript(message: ByteArray) = SigningContext.fromContext(label.toByteArray()).bytes(message)
 
     override fun sign(message: ByteArray) = privateKey().sign(transcript(message)).toByteArray()
 

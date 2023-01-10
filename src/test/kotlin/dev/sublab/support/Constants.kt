@@ -1,5 +1,5 @@
 package dev.sublab.support
 
-object Constants {
+internal object Constants {
     const val testsCount = 1000
 }

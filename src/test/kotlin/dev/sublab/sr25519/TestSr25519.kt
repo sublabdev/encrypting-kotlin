@@ -10,13 +10,13 @@ import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.Test
 
-class TestSr25519 {
+internal class TestSr25519 {
 
     private val testValues: List<ByteArray>
         get() = (0 until Constants.testsCount).map { UUID.randomUUID().toString().toByteArray() }
 
     @Test
-    internal fun test() {
+    fun test() {
         val seed = "0xcfdd8f2503e043e9884997c6afcccd3bb30184f7c504de359ce3e591d4f8d853".hex.decode()
         val correctPublicKey = "0x003b6c9a114fb708a99b6fa6753e145f12cf62b9eba095d57a4237570e152f53".hex.decode()
         val privateKey = seed.sr25519().loadPrivateKey()
@@ -31,7 +31,7 @@ class TestSr25519 {
     }
 
     @Test
-    internal fun testKeyPair() {
+    fun testKeyPair() {
         val mnemonicProvider = DefaultMnemonicProvider(SubstrateSeedFactory())
         for (i in 0 until Constants.testsCount/10) {
             val mnemonic = mnemonicProvider.make(12)
@@ -49,7 +49,7 @@ class TestSr25519 {
     }
 
     @Test
-    internal fun testKeyFactory() {
+    fun testKeyFactory() {
         for (i in 0 until Constants.testsCount/10) {
             val keyPair = KeyPair.Factory.sr25519().generate()
 

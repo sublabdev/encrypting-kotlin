@@ -12,13 +12,13 @@ import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 
-class TestEcdsa {
+internal class TestEcdsa {
 
     private val testValues: List<ByteArray>
         get() = (0 until Constants.testsCount).map { UUID.randomUUID().toString().toByteArray() }
 
-    @Test internal fun testSubstrateSignature() = testSignature(Kind.SUBSTRATE)
-    @Test internal fun testEthereumSignature() = testSignature(Kind.ETHEREUM)
+    @Test fun testSubstrateSignature() = testSignature(Kind.SUBSTRATE)
+    @Test fun testEthereumSignature() = testSignature(Kind.ETHEREUM)
 
     private fun testSignature(kind: Kind) {
         val seed = "0x0637cff0bfebd949172774cbc4d9933e92b6a18eaffd835a79a776a0f6cf92e9".hex.decode()
@@ -32,8 +32,8 @@ class TestEcdsa {
         }
     }
 
-    @Test internal fun testSubstrateKeyPair() = testKeyPair(Kind.SUBSTRATE)
-    @Test internal fun testEthereumKeyPair() = testKeyPair(Kind.ETHEREUM)
+    @Test fun testSubstrateKeyPair() = testKeyPair(Kind.SUBSTRATE)
+    @Test fun testEthereumKeyPair() = testKeyPair(Kind.ETHEREUM)
 
     private fun testKeyPair(kind: Kind) {
         val seedFactory = when (kind) {

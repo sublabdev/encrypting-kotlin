@@ -24,6 +24,8 @@ private fun ByteArray.withPublicKeyPrefix() = publicKeyPrefix() + this
 private fun ByteArray.withoutPublicKeyPrefix() = copyOfRange(publicKeyPrefix().size, size)
 
 class Ed25519(private val byteArray: ByteArray): SignatureEngine {
+    override val name = "ed25519"
+
     init {
         Security.addProvider(EdDSASecurityProvider())
     }
