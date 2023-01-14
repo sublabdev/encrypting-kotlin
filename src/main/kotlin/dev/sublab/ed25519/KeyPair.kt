@@ -7,6 +7,7 @@ import dev.sublab.encrypting.mnemonic.DefaultMnemonicProvider
 import dev.sublab.encrypting.mnemonic.SeedFactory
 import dev.sublab.encrypting.mnemonic.SubstrateSeedFactory
 
+/
 internal class Ed25519KeyPair(
     override val privateKey: ByteArray,
     override val publicKey: ByteArray

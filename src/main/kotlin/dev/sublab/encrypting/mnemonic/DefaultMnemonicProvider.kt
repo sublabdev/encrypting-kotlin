@@ -5,6 +5,9 @@ import java.util.*
 
 class InvalidWordCountException: Throwable()
 
+/**
+ * Default mnemonic provider
+ */
 class DefaultMnemonicProvider(private val seedFactory: SeedFactory): MnemonicProvider {
     @Throws(InvalidWordCountException::class)
     override fun make(wordCount: Int, language: String): Mnemonic {

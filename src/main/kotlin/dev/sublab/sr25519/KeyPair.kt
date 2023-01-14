@@ -4,6 +4,9 @@ import dev.sublab.encrypting.keys.KeyPair
 import dev.sublab.encrypting.keys.KeyPairFactory
 import dev.sublab.encrypting.mnemonic.SubstrateSeedFactory
 
+/**
+ * Sr25519 implementation of KeyPair protocol
+ */
 internal class Sr25519Keypair(
     override val privateKey: ByteArray,
     override val publicKey: ByteArray,
