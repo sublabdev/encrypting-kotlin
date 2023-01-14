@@ -23,6 +23,9 @@ private fun publicKeyPrefix() = publicKeyPrefix.hex.decode()
 private fun ByteArray.withPublicKeyPrefix() = publicKeyPrefix() + this
 private fun ByteArray.withoutPublicKeyPrefix() = copyOfRange(publicKeyPrefix().size, size)
 
+/**
+ * Handles ED25519 encryption
+ */
 class Ed25519(private val byteArray: ByteArray): SignatureEngine {
     override val name = "ed25519"
 
@@ -39,19 +42,32 @@ class Ed25519(private val byteArray: ByteArray): SignatureEngine {
 
     private fun publicKeySpec() = EdDSAPublicKeySpec(privateKeyFromEncoded(byteArray).a, curveTable())
 
+    /**
+     * Loads a private key for ED25519
+     */
     override fun loadPrivateKey(): ByteArray
         = keyFactory().generatePrivate(privateKeySpecFromSeed()).encoded.withoutPrivateKeyPrefix()
+
+    /**
+     * Generates a public key for ED25519
+     */
     override fun publicKey(): ByteArray
         = keyFactory().generatePublic(publicKeySpec()).encoded.withoutPublicKeyPrefix()
 
     private fun signature() = Signature.getInstance(EdDSAEngine.SIGNATURE_ALGORITHM, EdDSASecurityProvider.PROVIDER_NAME)
 
+    /**
+     * The default signing implementation for ED25519
+     */
     override fun sign(message: ByteArray): ByteArray = signature().run {
         initSign(privateKeyFromEncoded(byteArray))
         update(message)
         sign()
     }
 
+    /**
+     * Verifies the provided message and signature against ED25519
+     */
     override fun verify(message: ByteArray, signature: ByteArray) = signature().run {
         initVerify(EdDSAPublicKey(X509EncodedKeySpec(byteArray.withPublicKeyPrefix())))
         update(message)

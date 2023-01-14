@@ -2,6 +2,9 @@ package dev.sublab.encrypting.mnemonic
 
 import cash.z.ecc.android.bip39.Mnemonics
 
+/**
+ * A default mnemonic
+ */
 class DefaultMnemonic(
     private val code: Mnemonics.MnemonicCode,
     private val seedFactory: SeedFactory
