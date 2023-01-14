@@ -12,10 +12,10 @@ class DefaultMnemonic(
     override fun toSeed(passphrase: String) = seedFactory.deriveSeed(this, passphrase).copyOf(32)
 
     companion object {
-        fun fromPhrase(phrase: String): Mnemonic
-            = DefaultMnemonic(Mnemonics.MnemonicCode(phrase), SubstrateSeedFactory())
+        fun fromPhrase(phrase: String, seedFactory: SeedFactory = SubstrateSeedFactory()): Mnemonic
+            = DefaultMnemonic(Mnemonics.MnemonicCode(phrase), seedFactory)
 
-        fun fromWords(words: Sequence<String>): Mnemonic
-            = fromPhrase(words.joinToString(" "))
+        fun fromWords(words: Sequence<String>, seedFactory: SeedFactory = SubstrateSeedFactory()): Mnemonic
+            = fromPhrase(words.joinToString(" "), seedFactory)
     }
 }

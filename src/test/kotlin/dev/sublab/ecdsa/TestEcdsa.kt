@@ -57,8 +57,8 @@ internal class TestEcdsa {
         }
     }
 
-    @Test internal fun testSubstrateKeyFactory() = testKeyFactory(Kind.SUBSTRATE)
-    @Test internal fun testEthereumKeyFactory() = testKeyFactory(Kind.ETHEREUM)
+    @Test fun testSubstrateKeyFactory() = testKeyFactory(Kind.SUBSTRATE)
+    @Test fun testEthereumKeyFactory() = testKeyFactory(Kind.ETHEREUM)
 
     private fun testKeyFactory(kind: Kind) {
         for (i in 0 until Constants.testsCount/10) {

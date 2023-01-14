@@ -1,6 +1,7 @@
 package dev.sublab.sr25519
 
 import dev.sublab.encrypting.keys.KeyPair
+import dev.sublab.encrypting.mnemonic.DefaultMnemonic
 import dev.sublab.encrypting.mnemonic.DefaultMnemonicProvider
 import dev.sublab.encrypting.mnemonic.SubstrateSeedFactory
 import dev.sublab.hex.hex

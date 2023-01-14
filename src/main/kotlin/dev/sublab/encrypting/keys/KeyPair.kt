@@ -14,11 +14,14 @@ interface KeyPairFactory {
     fun load(seedOrPrivateKey: ByteArray): KeyPair
 
     val seedFactory: SeedFactory
-    fun generate(wordCount: Int = DEFAULT_WORD_COUNT) = generate(DefaultMnemonicProvider(seedFactory).make(wordCount))
+    fun generate(wordCount: Int = DEFAULT_WORD_COUNT, passphrase: String = "") = generate(
+        mnemonic = DefaultMnemonicProvider(seedFactory).make(wordCount),
+        passphrase = passphrase
+    )
 
-    fun generate(mnemonic: Mnemonic) = load(mnemonic.toSeed())
-    fun generate(phrase: String) = generate(DefaultMnemonic.fromPhrase(phrase))
-    fun generate(words: Sequence<String>) = generate(DefaultMnemonic.fromWords(words))
+    fun generate(mnemonic: Mnemonic, passphrase: String = "") = load(mnemonic.toSeed(passphrase))
+    fun generate(phrase: String, passphrase: String = "") = generate(DefaultMnemonic.fromPhrase(phrase), passphrase)
+    fun generate(words: Sequence<String>, passphrase: String = "") = generate(DefaultMnemonic.fromWords(words), passphrase)
 }
 
 abstract class KeyPair: Signer, Verifier {

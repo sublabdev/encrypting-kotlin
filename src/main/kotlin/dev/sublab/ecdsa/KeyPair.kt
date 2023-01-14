@@ -6,6 +6,7 @@ import dev.sublab.encrypting.mnemonic.DefaultMnemonicProvider
 import dev.sublab.encrypting.mnemonic.EthereumSeedFactory
 import dev.sublab.encrypting.mnemonic.SeedFactory
 import dev.sublab.encrypting.mnemonic.SubstrateSeedFactory
+import dev.sublab.encrypting.signing.SignatureEngine
 
 internal class EcdsaKeyPair(
     override val privateKey: ByteArray,
