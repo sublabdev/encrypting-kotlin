@@ -22,20 +22,51 @@ import cash.z.ecc.android.bip39.Mnemonics
 
 /**
  * A default mnemonic
+ * @property code mnemonic code
+ * @property seedFactory a seed factory
  */
 class DefaultMnemonic(
     private val code: Mnemonics.MnemonicCode,
     private val seedFactory: SeedFactory
 ): Mnemonic {
+    /**
+     * Returns words count of mnemonic code
+     */
     override val wordCount get() = code.wordCount
+
+    /**
+     * Returns words
+     */
     override val words get() = code.words.map { it.joinToString("") }
+
+    /**
+     * Converts code to entropy
+     */
     override val entropy get() = code.toEntropy()
+
+    /**
+     * Gets seed uinga a passphrase
+     * @param passphrase a passphrase used to get a seed
+     * @return A seed
+     */
     override fun toSeed(passphrase: String) = seedFactory.deriveSeed(this, passphrase).copyOf(32)
 
     companion object {
+        /**
+         * Returns a mnemonic using the provided phrase and seed factory
+         * @param phrase a phrase used to get a mnemonic
+         * @param seedFactory seed factory used to get a mnemonic
+         * @return A mnemonic from the provided phrase and seed factory
+         */
         fun fromPhrase(phrase: String, seedFactory: SeedFactory = SubstrateSeedFactory()): Mnemonic
             = DefaultMnemonic(Mnemonics.MnemonicCode(phrase), seedFactory)
 
+        /**
+         * Returns a mnemonic using the provided wrods and seed factory
+         * @param words words used to get a mnemonic
+         * @param seedFactory seed factory used to get a mnemonic
+         * @return A mnemonic from the provided words and seed factory
+         */
         fun fromWords(words: Sequence<String>, seedFactory: SeedFactory = SubstrateSeedFactory()): Mnemonic
             = fromPhrase(words.joinToString(" "), seedFactory)
     }

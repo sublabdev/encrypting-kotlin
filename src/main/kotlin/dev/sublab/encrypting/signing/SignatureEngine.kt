@@ -27,11 +27,13 @@ interface SignatureEngine: Verifier, Signer {
 
     /**
      * Loads a private key
+     * @return [ByteArray] private key
      */
     fun loadPrivateKey(): ByteArray
 
     /**
      * Generates a public key
+     * @return [ByteArray] public key
      */
     fun publicKey(): ByteArray
 }

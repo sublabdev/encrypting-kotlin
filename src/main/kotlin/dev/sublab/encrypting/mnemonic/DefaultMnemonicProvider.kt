@@ -25,6 +25,7 @@ class InvalidWordCountException: Throwable()
 
 /**
  * Default mnemonic provider
+ * @property seedFactory a seed factory used to generate a mnemonic
  */
 class DefaultMnemonicProvider(private val seedFactory: SeedFactory): MnemonicProvider {
     @Throws(InvalidWordCountException::class)

@@ -21,7 +21,8 @@ package dev.sublab.sr25519
 import dev.sublab.encrypting.signing.SignatureEngine
 
 /**
- * Handles SR25519 encryption
+ * Handles [SR25519] encryption
+ * @property byteArray a [ByteArray] to be encrupted using [SR25519]
  */
 class Sr25519(private val byteArray: ByteArray, private val label: String): SignatureEngine {
     override val name = "sr25519"
@@ -36,31 +37,38 @@ class Sr25519(private val byteArray: ByteArray, private val label: String): Sign
         = PublicKey.fromByteArray(byteArray)
 
     /**
-     * Loads the private key for SR25519
+     * Loads the private key for [SR25519]
+     * @return A private key
      */
     override fun loadPrivateKey() = privateKey().toByteArray()
 
     /**
-     * Generates a public key for SR25519
+     * Generates a public key for [SR25519]
+     * @return A public key
      */
     override fun publicKey() = privateKey().toPublicKey().toByteArray()
 
     private fun transcript(message: ByteArray) = SigningContext.fromContext(label.toByteArray()).bytes(message)
 
     /**
-     * The default signing implementation for SR25519
+     * The default signing implementation for [SR25519]
+     * @param message a message used for signing
+     * @return A newly created signature
      */
     override fun sign(message: ByteArray) = privateKey().sign(transcript(message)).toByteArray()
 
     /**
-     * Verifies the provided message and signature against SR25519
+     * Verifies the provided message and signature against [SR25519]
+     * @param message a message used for verification
+     * @param signature a signature used for verification
+     * @return [Boolean] value with a result fo the verification
      */
     override fun verify(message: ByteArray, signature: ByteArray)
         = publicKeyFromRistretto().verify(transcript(message), Signature.fromByteArray(signature))
 }
 
 /**
- * An access point to SR25519 functionality
+ * An access point to [SR25519] functionality
  */
 fun ByteArray.sr25519(label: String = DEFAULT_LABEL)
     = Sr25519(this, label)

@@ -34,6 +34,10 @@ internal class Sr25519Keypair(
         = byteArray.sr25519(label)
 }
 
+/**
+ * Returns [SR25519] keypair factory for a specific kind
+ * @param kind a kind of factory to return
+ */
 fun KeyPair.Factory.sr25519(label: String = DEFAULT_LABEL) = object : KeyPairFactory {
     override val seedFactory get() = SubstrateSeedFactory()
     override fun load(seedOrPrivateKey: ByteArray) = seedOrPrivateKey.sr25519(label).loadPrivateKey().let {

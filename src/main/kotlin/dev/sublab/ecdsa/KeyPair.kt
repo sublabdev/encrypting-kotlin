@@ -27,7 +27,7 @@ import dev.sublab.encrypting.mnemonic.SubstrateSeedFactory
 import dev.sublab.encrypting.signing.SignatureEngine
 
 /**
- * A key pair for Ecdsa
+ * A key pair for [ECDSA]
  */
 internal class EcdsaKeyPair(
     override val privateKey: ByteArray,
@@ -35,11 +35,17 @@ internal class EcdsaKeyPair(
     private val kind: Kind
 ): KeyPair() {
     /**
-     * Returns the SignatureEngine for ED25519
+     * Returns the signature engine for [ED25519]
+     * @param byteArray a [ByteArray] for which the signature engine is fetched
+     * @return A signature engine
      */
     override fun getSignatureEngine(byteArray: ByteArray) = byteArray.ecdsa(kind)
 }
 
+/**
+ * Returns [ECDSA] keypair factory for a specific kind
+ * @param kind a kind of factory to return
+ */
 fun KeyPair.Factory.ecdsa(kind: Kind) = object : KeyPairFactory {
     override val seedFactory: SeedFactory
         get() = when (kind) {

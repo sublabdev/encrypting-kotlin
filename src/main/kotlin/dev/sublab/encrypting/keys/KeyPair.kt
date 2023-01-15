@@ -29,13 +29,13 @@ import dev.sublab.encrypting.signing.Verifier
 const val DEFAULT_WORD_COUNT = 12
 
 /**
- * A factory for creating a `KeyPair` object
+ * A factory for creating a [KeyPair] object
  */
 interface KeyPairFactory {
     /**
-     * Loads seed to create a `KeyPair`
+     * Loads seed to create a [KeyPair]
      * @param seedOrPrivateKey The seed data or private key which is used to generate a `KeyPair` object
-     * @return `KeyPair` object with private and public keys as well as with an interface that provides a signature
+     * @return `KeyPair] object with private and public keys as well as with an interface that provides a signature
      * engine, message signing and signature (and message) verification interfaces.
      */
     fun load(seedOrPrivateKey: ByteArray): KeyPair
@@ -43,7 +43,10 @@ interface KeyPairFactory {
     val seedFactory: SeedFactory
 
     /**
-     * Generates a `KeyPair` from a word count and a passphrase.
+     * Generates a [KeyPair] from a word count and a passphrase.
+     * @param wordCount a count of words used for generatirng a [KeyPair]. The default value is set to 12
+     * @param passphrase a pass phrase used for generating a [KeyPair]
+     * @return A newly generated [KeyPair]
      */
     fun generate(wordCount: Int = DEFAULT_WORD_COUNT, passphrase: String = "") = generate(
         mnemonic = DefaultMnemonicProvider(seedFactory).make(wordCount),
@@ -51,7 +54,10 @@ interface KeyPairFactory {
     )
 
     /**
-     * Generates a `KeyPair` from a mnemonic and a passphrase
+     * Generates a [KeyPair] from a mnemonic and a passphrase
+     * @param mnemonic a mnemonic used for [KeyPair] generatjkon
+     * @param passphrase a passphrase used to generate [KeyPair]
+     * @return [KeyPair] from a mnemonic a n passphrase
      */
     fun generate(mnemonic: Mnemonic, passphrase: String = "") = load(mnemonic.toSeed(passphrase))
 
@@ -61,7 +67,10 @@ interface KeyPairFactory {
     fun generate(phrase: String, passphrase: String = "") = generate(DefaultMnemonic.fromPhrase(phrase), passphrase)
 
     /**
-     * Generates a `KeyPair` from seed phrase words and a passphrase
+     * Generates a [KeyPair] from seed phrase words and a passphrase
+     * @param words words used for [KeyPair] generatjkon
+     * @param passphrase a passphrase used to generate [KeyPair]
+     * @return [KeyPair] from wrods a n passphrase
      */
     fun generate(words: Sequence<String>, passphrase: String = "") = generate(DefaultMnemonic.fromWords(words), passphrase)
 }
@@ -74,7 +83,8 @@ abstract class KeyPair: Signer, Verifier {
     companion object Factory
 
     /**
-     * Signature engine used
+     * Returns signature engine used
+     * @param byteArray [ByteArray] for which signature engine should be returned
      */
     abstract fun getSignatureEngine(byteArray: ByteArray): SignatureEngine
 
@@ -83,12 +93,15 @@ abstract class KeyPair: Signer, Verifier {
 
     /**
      * The default signing implementation
+     * @param message [ByteArray] message to sign
      * @return The signature
      */
     override fun sign(message: ByteArray) = getSignatureEngine(privateKey).sign(message)
 
     /**
      * The default verification implementation
+     * @param message a message used for verification
+     * @param signature a signature used for verification
      * @return A Bool value indicating whether the verification was successful or not
      */
     override fun verify(message: ByteArray, signature: ByteArray)

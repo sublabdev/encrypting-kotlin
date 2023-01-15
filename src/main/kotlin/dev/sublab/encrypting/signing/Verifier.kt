@@ -24,6 +24,9 @@ package dev.sublab.encrypting.signing
 interface Verifier {
     /**
      * Verifies the provided message and signature
+     * @param message message used for the verification
+     * @param signature signature used for the verification
+     * @return [Boolean] result of the verification
      */
     fun verify(message: ByteArray, signature: ByteArray): Boolean
 }

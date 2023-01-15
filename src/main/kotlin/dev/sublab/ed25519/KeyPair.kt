@@ -33,6 +33,9 @@ internal class Ed25519KeyPair(
     override fun getSignatureEngine(byteArray: ByteArray) = byteArray.ed25519
 }
 
+/**
+ * Returns [ED25519] keypair factory
+ */
 val KeyPair.Factory.ed25519 get() = object : KeyPairFactory {
     override val seedFactory get() = SubstrateSeedFactory()
     override fun load(seedOrPrivateKey: ByteArray) = seedOrPrivateKey.ed25519.loadPrivateKey().let {

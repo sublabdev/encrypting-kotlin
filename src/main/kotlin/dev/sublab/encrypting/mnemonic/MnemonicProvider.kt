@@ -26,6 +26,9 @@ import java.util.*
 interface MnemonicProvider {
     /**
      * Makes a mnemonic with specific count of words and language
+     * @param wordCount count of words to use
+     * @param language language to use. The default language is English.
+     * @return Returns a mnemonic
      */
     fun make(wordCount: Int, language: String = Locale.ENGLISH.language): Mnemonic
 }
