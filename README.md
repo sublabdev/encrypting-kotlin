@@ -56,7 +56,7 @@ implementation 'dev.sublab:encrypting-kotlin:1.0.0'
 
 ## Documentation
 
-- Our GitBook: [https://docs.sublab.dev/kotlin-libraries/encrypting-library(https://docs.sublab.dev/kotlin-libraries/encrypting-library/)
+- Our GitBook: [https://docs.sublab.dev/kotlin-libraries/encrypting-library](https://docs.sublab.dev/kotlin-libraries/encrypting-library/)
 - API reference: [https://api-reference.sublab.dev/encrypting-kotlin/](https://api-reference.sublab.dev/encrypting-kotlin/)
 
 ## Contributing
