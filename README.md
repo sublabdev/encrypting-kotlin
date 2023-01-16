@@ -14,9 +14,16 @@
 
 # Sublab's Common Kotlin library
 
-This is a Kotlin repository which shares common functionality across most of our repositories which solve separate problems in Substrate ecosystem.
+This is a Kotlin repository which has different Encrypting algorithms such as ecdsa, ed25519, and sr25519, that are currently supported by Substrate ecosystem to sign extrinsics.
 
-So this is a good place to store new types that do not exist in Kotlin environment, but required for Substrate to work, such as Rust-specific types; some syntax sugar to enhance development speed and code readability; and different conversions between multiple types that happens frequently.
+We don't expect yet to implement more of the algorithms unless some Substrate network develops an app which introduces new algorithm.
+
+But currently we're borrowing implementation of some algorithms from alien libraries, which are writen in Java. So we're aiming to rewrite them to Kotlin. But this should be done in a separate repository.
+
+This repository collects all these algorithms to proxy them with common interface for easier usage in other Sublab's repositories.
+
+In addition to algorithms, this repository solves key pair generation routine using those algorithms. However, even though there are a few convenient functions to cover as much as possible cases, some might be missing.
+
 
 ## Sublab
 
