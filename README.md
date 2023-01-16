@@ -12,7 +12,7 @@
 [![Telegram channel](https://img.shields.io/badge/chat-telegram-green.svg?logo=telegram)](https://t.me/sublabsupport)
 [![GitHub License](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
-# Sublab's Common Kotlin library
+# Sublab's Encrypting Kotlin library
 
 This is a Kotlin repository which has different Encrypting algorithms such as ecdsa, ed25519, and sr25519, that are currently supported by Substrate ecosystem to sign extrinsics.
 
