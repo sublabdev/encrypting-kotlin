@@ -42,8 +42,8 @@ private fun ByteArray.withPublicKeyPrefix() = publicKeyPrefix() + this
 private fun ByteArray.withoutPublicKeyPrefix() = copyOfRange(publicKeyPrefix().size, size)
 
 /**
- * Handles [ED25519] encryption
- * @property byteArray a [ByteArray] which should be encrypted using [ED25519]
+ * Handles ed25519 encryption
+ * @property byteArray a [ByteArray] which should be encrypted using ed25519
  */
 class Ed25519(private val byteArray: ByteArray): SignatureEngine {
     override val name = "ed25519"
@@ -62,14 +62,14 @@ class Ed25519(private val byteArray: ByteArray): SignatureEngine {
     private fun publicKeySpec() = EdDSAPublicKeySpec(privateKeyFromEncoded(byteArray).a, curveTable())
 
     /**
-     * Loads a private key for [ED25519]
+     * Loads a private key for ed25519
      * @return A private key
      */
     override fun loadPrivateKey(): ByteArray
         = keyFactory().generatePrivate(privateKeySpecFromSeed()).encoded.withoutPrivateKeyPrefix()
 
     /**
-     * Generates a public key for [ED25519]
+     * Generates a public key for ed25519
      * @return A public key
      */
     override fun publicKey(): ByteArray
@@ -78,7 +78,7 @@ class Ed25519(private val byteArray: ByteArray): SignatureEngine {
     private fun signature() = Signature.getInstance(EdDSAEngine.SIGNATURE_ALGORITHM, EdDSASecurityProvider.PROVIDER_NAME)
 
     /**
-     * The default signing implementation for [ED25519]
+     * The default signing implementation for ed25519
      * @param message message used for signing
      * @return Signature from the provided message
      */
@@ -89,9 +89,9 @@ class Ed25519(private val byteArray: ByteArray): SignatureEngine {
     }
 
     /**
-     * Verifies the provided message and signature against [ED25519]
+     * Verifies the provided message and signature against ed25519
      * @param message message used for the verification
-     * @param signature signautre used the verification
+     * @param signature signature used the verification
      */
     override fun verify(message: ByteArray, signature: ByteArray) = signature().run {
         initVerify(EdDSAPublicKey(X509EncodedKeySpec(byteArray.withPublicKeyPrefix())))
@@ -101,7 +101,7 @@ class Ed25519(private val byteArray: ByteArray): SignatureEngine {
 }
 
 /**
-* An access point to [ED25519] functionality
+* An access point to ed25519 functionality
 */
 val ByteArray.ed25519
     get() = Ed25519(this)

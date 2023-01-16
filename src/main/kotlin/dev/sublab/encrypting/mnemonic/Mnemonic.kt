@@ -27,7 +27,7 @@ interface Mnemonic {
     val entropy: ByteArray
 
     /**
-     * Generates a seed from a passphrase. The default value of the passphrase is empty
+     * Generates a seed with a passphrase. The default value of the passphrase is empty
      * @return seed from a passphrase
      */
     fun toSeed(passphrase: String = ""): ByteArray

@@ -20,12 +20,11 @@ package dev.sublab.ed25519
 
 import dev.sublab.encrypting.keys.KeyPair
 import dev.sublab.encrypting.keys.KeyPairFactory
-import dev.sublab.encrypting.mnemonic.DefaultMnemonic
-import dev.sublab.encrypting.mnemonic.DefaultMnemonicProvider
-import dev.sublab.encrypting.mnemonic.SeedFactory
 import dev.sublab.encrypting.mnemonic.SubstrateSeedFactory
 
-/
+/**
+ * A key pair for [Ed25519]
+ */
 internal class Ed25519KeyPair(
     override val privateKey: ByteArray,
     override val publicKey: ByteArray
@@ -34,7 +33,7 @@ internal class Ed25519KeyPair(
 }
 
 /**
- * Returns [ED25519] keypair factory
+ * Returns ed25519 keypair factory
  */
 val KeyPair.Factory.ed25519 get() = object : KeyPairFactory {
     override val seedFactory get() = SubstrateSeedFactory()

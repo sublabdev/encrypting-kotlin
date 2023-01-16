@@ -25,7 +25,7 @@ interface SeedFactory {
     /**
      * Generates a seed from a mnemonic, with a passphrase.
      * @param mnemonic mnemonic used to get a seed value
-     * @param passphrase passphares used to get a seed. The default value of the passphrase is an empty [String]
+     * @param passphrase passphrase used to get a seed. The default value of the passphrase is an empty [String]
      * @return A generated seed [ByteArray]
      */
     fun deriveSeed(mnemonic: Mnemonic, passphrase: String = ""): ByteArray

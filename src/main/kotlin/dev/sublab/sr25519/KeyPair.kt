@@ -35,8 +35,8 @@ internal class Sr25519Keypair(
 }
 
 /**
- * Returns [SR25519] keypair factory for a specific kind
- * @param kind a kind of factory to return
+ * Returns sr25519 keypair factory for a specific kind
+ * @param label a label for factory to return, like "substrate"
  */
 fun KeyPair.Factory.sr25519(label: String = DEFAULT_LABEL) = object : KeyPairFactory {
     override val seedFactory get() = SubstrateSeedFactory()

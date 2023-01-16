@@ -44,7 +44,7 @@ interface KeyPairFactory {
 
     /**
      * Generates a [KeyPair] from a word count and a passphrase.
-     * @param wordCount a count of words used for generatirng a [KeyPair]. The default value is set to 12
+     * @param wordCount a count of words used for generating a [KeyPair]. The default value is set to 12
      * @param passphrase a pass phrase used for generating a [KeyPair]
      * @return A newly generated [KeyPair]
      */
@@ -55,9 +55,9 @@ interface KeyPairFactory {
 
     /**
      * Generates a [KeyPair] from a mnemonic and a passphrase
-     * @param mnemonic a mnemonic used for [KeyPair] generatjkon
+     * @param mnemonic a mnemonic used for [KeyPair] generation
      * @param passphrase a passphrase used to generate [KeyPair]
-     * @return [KeyPair] from a mnemonic a n passphrase
+     * @return [KeyPair] from a mnemonic and a passphrase
      */
     fun generate(mnemonic: Mnemonic, passphrase: String = "") = load(mnemonic.toSeed(passphrase))
 
@@ -68,9 +68,9 @@ interface KeyPairFactory {
 
     /**
      * Generates a [KeyPair] from seed phrase words and a passphrase
-     * @param words words used for [KeyPair] generatjkon
+     * @param words words used for [KeyPair] generation
      * @param passphrase a passphrase used to generate [KeyPair]
-     * @return [KeyPair] from wrods a n passphrase
+     * @return [KeyPair] from seed phrase words and a passphrase
      */
     fun generate(words: Sequence<String>, passphrase: String = "") = generate(DefaultMnemonic.fromWords(words), passphrase)
 }

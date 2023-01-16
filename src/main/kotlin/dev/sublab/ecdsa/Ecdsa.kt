@@ -37,7 +37,7 @@ private fun ByteArray.toEcdsa() = BigInteger(hex.encode(), 16)
 typealias Hasher = (ByteArray) -> ByteArray
 
 /**
- * Handles [ECDSA] encryption
+ * Handles ecdsa encryption
  */
 class Ecdsa(private val byteArray: ByteArray, private val hasher: Hasher): SignatureEngine {
     override val name = "ecdsa"
@@ -48,14 +48,14 @@ class Ecdsa(private val byteArray: ByteArray, private val hasher: Hasher): Signa
     override fun loadPrivateKey() = byteArray
 
     /**
-     * Generates a public key for [ECDSA]
+     * Generates a public key for ecdsa
      * @return public key as a [ByteArray]
      */
     override fun publicKey(): ByteArray = Sign.publicPointFromPrivate(privateKey())
         .getEncoded(true)
 
     /**
-     * The default signing implementation for [ECDSA]. Returns a generated signature
+     * The default signing implementation for ecdsa. Returns a generated signature
      * @param message message used to sign
      * @return A generated signature
      */
@@ -70,7 +70,7 @@ class Ecdsa(private val byteArray: ByteArray, private val hasher: Hasher): Signa
     }
 
     /**
-     * Verifies the provided message and signature against [ECDSA]
+     * Verifies the provided message and signature against ecdsa
      * @param message a message to verify
      * @param signature a signature used for verification
      * @return A [Boolean] value indicating whether the verification was successful
@@ -99,8 +99,8 @@ class Ecdsa(private val byteArray: ByteArray, private val hasher: Hasher): Signa
 }
 
 /**
- * An access point to [ECDSA] functionality
- * @param kind specifies [ECDSA]'s kind
+ * An access point to ecdsa functionality
+ * @param kind specifies ecdsa [Kind]
  */
 fun ByteArray.ecdsa(kind: Kind)
     = Ecdsa(this) { hash(kind, it) }

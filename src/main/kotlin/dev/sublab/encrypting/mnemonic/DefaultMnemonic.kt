@@ -45,7 +45,7 @@ class DefaultMnemonic(
     override val entropy get() = code.toEntropy()
 
     /**
-     * Gets seed uinga a passphrase
+     * Gets seed with a passphrase
      * @param passphrase a passphrase used to get a seed
      * @return A seed
      */
@@ -53,19 +53,19 @@ class DefaultMnemonic(
 
     companion object {
         /**
-         * Returns a mnemonic using the provided phrase and seed factory
-         * @param phrase a phrase used to get a mnemonic
+         * Returns a mnemonic using the provided phrase and a seed factory
+         * @param phrase seed phrase used to get a mnemonic
          * @param seedFactory seed factory used to get a mnemonic
-         * @return A mnemonic from the provided phrase and seed factory
+         * @return Mnemonic from the provided seed phrase and seed factory
          */
         fun fromPhrase(phrase: String, seedFactory: SeedFactory = SubstrateSeedFactory()): Mnemonic
             = DefaultMnemonic(Mnemonics.MnemonicCode(phrase), seedFactory)
 
         /**
-         * Returns a mnemonic using the provided wrods and seed factory
-         * @param words words used to get a mnemonic
+         * Returns a mnemonic using the provided seed phrase words and a seed factory
+         * @param words seed phrase words used to get a mnemonic
          * @param seedFactory seed factory used to get a mnemonic
-         * @return A mnemonic from the provided words and seed factory
+         * @return Mnemonic from the provided words and seed factory
          */
         fun fromWords(words: Sequence<String>, seedFactory: SeedFactory = SubstrateSeedFactory()): Mnemonic
             = fromPhrase(words.joinToString(" "), seedFactory)
